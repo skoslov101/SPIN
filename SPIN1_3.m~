@@ -41,7 +41,7 @@ Screen(window,'FillRect', colors.black); % Fill background with backcolor (black
 %Load and randomize stimuli
 [null,stims]=xlsread([expDirectory '/stimuliList.xlsx']);
 expTrials=[Shuffle(1:16) Shuffle(17:32) Shuffle(33:40) Shuffle(41:64)];
-perType=ceil(trialNum/4);
+perType=trialNum/4;
 
 trialVar=[expTrials(1:perType) expTrials(17:16+perType) expTrials(33:32+perType) expTrials(41:40+perType)];
 trialList=stims(trialVar,:);
@@ -90,10 +90,7 @@ Screen('Flip',window);
 if debug~=1;getResp('space');end; % Wait for user to press 'space bar'; % Wait for user to press 'space bar'  
 % if debug~=1;getResp_laptop('space');end;
 
-%% Add in practice trial here.
-
-
-%% Start Experiment 
+%Start Experiment 
 for i = 1:length(trialVar)
     trialN=trialN+1;
     %Display fixation cross
@@ -144,7 +141,7 @@ for i = 1:length(trialVar)
 %     cenTex3({''},window,screenRect,colors.black,white,32) % Display fixation cross
     if debug~=1
         FlushEvents('keyDown');
-        [Response,string]=getTextResponses(window,'Target Sentence: ',Xorigin-Xorigin/1.2,Yorigin, colors.white, colors.black);
+        [Response,string]=getTextResponses(window,'Target Sentence: ',Xorigin-Xorigin/1.2,Yorigin, colors.black, colors.white);
     else
         Response=corrResp;
     end
@@ -189,10 +186,10 @@ for i = 1:length(trialVar)
     if strcmpi(stims{trialVar(i),3},'1T')==1
         score_1t=score_1t+points;
         poss1t=poss1t+possPoints;
-    elseif strcmpi(stims{trialVar(i),3},'2Talker')==1
+    elseif strcmpi(stims{trialVar(i),3},'2T')==1
         score_2t=score_2t+points;
         poss2t=poss2t+possPoints;
-    elseif strcmpi(stims{trialVar(i),3},'8Talker')==1
+    elseif strcmpi(stims{trialVar(i),3},'8T')==1
         score_8t=score_8t+points;
         poss8t=poss8t+possPoints;
     else
@@ -204,30 +201,27 @@ for i = 1:length(trialVar)
     points2=mat2str(points);
 %     points2=['+' points2];
     pointsText=['You got ' points2 ' of the keywords correct!'];
-%     Screen(
     DrawFormattedText(window, pointsText, 'center', 'center', colors.white);
     Screen('Flip',window);
 %     cenTex3({pointsText},window,screenRect,colors.black,white,64) % Display feedback
     pause(1*speedup);
     
     %Display screen for next trial
-    if i~=length(trialVar)
-        instructions = ['Please press the space bar when you are ready for the next trial',...
-        ''];
-
-        DrawFormattedText(window, instructions, 'center', 'center', colors.white);
-        Screen('Flip',window);
-    %     cenTex3(instructions,window,screenRect,colors.black,white,18) % Display feedback
-        if debug~=1;getResp('space');end; % Wait for user to press 'space bar'; % Wait for user to press 'space bar'  
-    %     if debug~=1;getResp_laptop('space');end;
-    end
+    instructions = ['Please press the space bar when you are ready for the next trial',...
+    ''];
+    
+    DrawFormattedText(window, instructions, 'center', 'center', colors.white);
+    Screen('Flip',window);
+%     cenTex3(instructions,window,screenRect,colors.black,white,18) % Display feedback
+    if debug~=1;getResp('space');end; % Wait for user to press 'space bar'; % Wait for user to press 'space bar'  
+%     if debug~=1;getResp_laptop('space');end;
     
     %Collect data for saving later
     data{trialN,1}=trialN; %Trial Number
-    data{trialN,2}=stims{trialVar(i),1}; %Stimulus file name
-    data{trialN,3}=stims{trialVar(i),2}; %Stimulus sentence
-    data{trialN,4}=stims{trialVar(i),3}; %Stimulus file type (noise type)
-    data{trialN,5}=stims{trialVar(i),4}; %keywords used for correct response feedback
+    data{trialN,2}=stims{i,1}; %Stimulus file name
+    data{trialN,3}=stims{i,2}; %Stimulus sentence
+    data{trialN,4}=stims{i,3}; %Stimulus file type (noise type)
+    data{trialN,5}=stims{i,4}; %keywords used for correct response feedback
     data{trialN,6}=Response; %Response
     data{trialN,7}=wordSwitch; %length of keywords
     data{trialN,8}=time2; %Response time
@@ -253,32 +247,28 @@ for i = 1:length(trialVar)
 end
 
 %Compute overall scores for the experiment
-overall_1t=round(score_1t/poss1t*100);
-overall_2t=round(score_2t/poss2t*100);
-overall_8t=round(score_8t/poss8t*100);
-overall_ssn=round(score_ssn/possssn*100);
-overall=round(totalpoints/totPos*100);
-
-% data2=[pid,overall_1t,overall_2t,overall_8t,overall_ssn,overall];
+overall_1t=score_1t/poss1t;
+overall_2t=score_2t/poss2t;
+overall_8t=score_8t/poss8t;
+overall_ssn=score_ssn/possssn;
+overall=totalpoints/totPos;
 
 % Screen(window,'TextFont','Verdana'); % Set text font
 % Screen(window,'FillRect', backcolor); % Fill background with backcolor
-instructions = ['You have reached the end of the experiment.\n',...
-    'Thank you very much for your participation!\n',...
-    '\n',...
-    'You got ' mat2str(overall_1t) '% of the 1 talker noise keywords correct!\n',...
-    'You got ' mat2str(overall_2t) '% of the 2 talker noise keywords correct!\n',...
-    'You got ' mat2str(overall_8t) '% of the 8 talker noise keywords correct!\n',...
-    'You got ' mat2str(overall_ssn) '% of the white noise keywords correct!\n',...
-    'And you got ' mat2str(overall) '% of the all words correct!\n',...
-    '\n',... 
-    'Please press ''e'' to exit. Thanks!'];
+instructions = ['You have reached the end of the experiment',...
+    'Thank you very much for your participation',...
+    '',...
+    ['You got ' overall_1t '% of the 1 talker noise keywords correct!'],...
+    ['You got ' overall_2t '% of the 2 talker noise keywords correct!'],...
+    ['You got ' overall_8t '% of the 8 talker noise keywords correct!'],...
+    ['You got ' overall_ssn '% of the white noise keywords correct!'],...
+    ['And you got ' overall '% of the all words correct!'],...
+    '',...
+    'Thanks!'];
 
 DrawFormattedText(window, instructions, 'center', 'center', colors.white);
-Screen('Flip', window);
-
 % cenTex3(instructions,window,screenRect,colors.black,white,18) % Print text centered
-getResp('e');% Wait for experimenter to press 'Esc'
+getResp('Esc');% Wait for experimenter to press 'Esc'
 % getResp_laptop('Esc');
 
     

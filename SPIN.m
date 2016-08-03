@@ -118,7 +118,7 @@ end
 %         data = SPIN1_3(debug,trialNum); %Day 1: 600 trials of acquisition
 % end
 
-data = SPIN1_3(debug,trialNum); %Day 1: 600 trials of acquisition
+[data] = SPIN1_3(debug,trialNum); %Day 1: 600 trials of acquisition
 
 filename = ['SPIN_' num2str(pid) '_' pinit '_' num2str(trialNum) '.mat'];
 
@@ -128,7 +128,7 @@ cd Data
 % Note: data can later be written to .xls if so desired, but limited
 % excel capability in some computer stations makes .mat the most consistent
 % method of data storage
-save(filename,'data');
+save(filename,'data'); 
 
 cd(expDirectory)
 
