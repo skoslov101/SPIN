@@ -26,8 +26,8 @@ screenid = max(Screen('Screens'));
 
 % Open a window on display screen 'screenid'. We choose a 50% gray
 % background by specifying a luminance level of 0.5:
-window = Screen(screenid, 'OpenWindow', BlackIndex(screenid), [100,200,900,800]);
-% window = Screen(screenid, 'OpenWindow', BlackIndex(screenid),[],[],[],[],10);
+% window = Screen(screenid, 'OpenWindow', BlackIndex(screenid), [100,200,900,800]);
+window = Screen(screenid, 'OpenWindow', BlackIndex(screenid),[],[],[],[],10);
 
 % Define center of screen
 rect = Screen('Rect', window); %[0,0,1920,1080]
@@ -79,7 +79,8 @@ instructions = ['Welcome to the Speech in Noise Challenge!',...
     'Then you will start to hear noise.  About half a second after the noise starts, \n',...
     'the target sentence will begin.',...
     '\n\n',...
-    'Your job is to report that target sentence as best that you can',...
+    'Your job is to report that target sentence as best that you can.',...
+    'You need to wait until the sentence is done playing before you can type anything.',...
     '\n\n',...
     'Please press the spacebar to continue'];
 
@@ -91,7 +92,7 @@ if debug~=1;getResp('space');end; % Wait for user to press 'space bar'; % Wait f
 % if debug~=1;getResp_laptop('space');end;
 
 %% Add in practice trial here.
-
+% instructions = ['Here, we will show you an example stimulus.'
 
 %% Start Experiment 
 for i = 1:length(trialVar)
@@ -144,7 +145,7 @@ for i = 1:length(trialVar)
 %     cenTex3({''},window,screenRect,colors.black,white,32) % Display fixation cross
     if debug~=1
         FlushEvents('keyDown');
-        [Response,string]=getTextResponses(window,'Target Sentence: ',Xorigin-Xorigin/1.2,Yorigin, colors.white, colors.black);
+        [Response,string]=getTextResponses(window,'Target Sentence (Press enter when you are done):',Xorigin-Xorigin/1.2,Yorigin, colors.white, colors.black);
     else
         Response=corrResp;
     end
@@ -219,7 +220,7 @@ for i = 1:length(trialVar)
         Screen('Flip',window);
     %     cenTex3(instructions,window,screenRect,colors.black,white,18) % Display feedback
         if debug~=1;getResp('space');end; % Wait for user to press 'space bar'; % Wait for user to press 'space bar'  
-    %     if debug~=1;getResp_laptop('space');end;
+%         if debug~=1;getResp_laptop('space');end;
     end
     
     %Collect data for saving later
@@ -279,6 +280,6 @@ Screen('Flip', window);
 
 % cenTex3(instructions,window,screenRect,colors.black,white,18) % Print text centered
 getResp('e');% Wait for experimenter to press 'Esc'
-% getResp_laptop('Esc');
+% getResp_laptop('e');
 
     

@@ -37,7 +37,7 @@ while datainputflag ~= 1
         trialNum = info{3};
 
 
-        pinitT = str2double(pinitT);
+%         pinitT = str2double(pinitT);
         if isnan(pinitT)
             pinit = info{3};
             initCH = 1;

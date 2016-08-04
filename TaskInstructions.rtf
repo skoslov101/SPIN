@@ -1,0 +1,46 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 SPIN Demo User Instructions.\
+\
+1) Download the program and supporting files:\
+	- Go to the terminal\
+	IF you need to get the files for the first time:\
+		- Type in: git clone https://github.com/skoslov101/SPIN.git\
+	IF you already have the files and just need to update\
+		- Type in: git pull origin master\
+	- You should now have the most recently updated program files\
+\
+2) Open MATLAB\
+	- This experiment was programmed on MATLAB 2014b and Psychtoolbox 3.  It will definitely need Psychtoolbox 3 to work.  Other small issues may occur of a different version of MATLAB is used.\
+\
+3) Go to the folder you have stored the program files in - so use the MATLAB dropdown bar to find the right place.\
+\
+4) Now the experiment should be set up and ready to run.  However, you first want to show all of the participants an example of how the experiment works.  For each trial, a noise-background will begin to play.  500ms later, the target sentence, spoken by a single female speaker, will begin to play.  That is the sentence that needs to be reported for points/score.\
+	- So what you should do is play the separate example file, visually and verbally showing the subjects when the target sentence begins from within the noise.  This way, we don\'92t have to have practice trials for each participant.  You can replay the sentence a few times as needed.\
+\
+5) Once you are ready to run the experiment, in the command line on MATLAB type in SPIN\
+	- That command will initiate the program.  A window should pop up where you can enter\
+		- Subject Number: Choose any number\
+		- Subject Initials: Choose any initials other than debug\
+		- Trial Number: This is how many trials the subject will do. In the interest of time constraints, I\'92ve made this variable.  There are 4 different types of noise trials, so this is set to round to a factor of 4.  So the program works best if you use 4, 8, 12, 16, etc\'85 as the trial number.  I think 8 works best for the time constraint.\
+\
+6) Go over the instructions with the participant as they are starting: \'93You will be hearing some sentences.  First the noise will start playing and then 500ms later a target sentence will start.  Report as many of the words from the target sentence as you can.  Wait until the sentence is done before you start typing.  Most sentences have 3 keywords for you to try to report (nouns, verbs, adjectives are keywords).  Press enter to submit your response and go to the next trial.  These may be difficult, just do the best that you can!  Good luck.\'94\
+\
+7) The experiment will be over when it goes to the final screen that says thanks and shows subject scores.  If you care about having access to these scores later, you will need to write these down now, before exiting.  If you need to find them later, they can be computed from the data file.\
+	- Data filename: SPIN_partNum_partInit_numOfTrials.mat\
+	1: TrialNumber\
+	2: Stimulus Name\
+	3: Stim Phrase\
+	4: Noise Type\
+	5: Keywords\
+	6: Response\
+	7: Don\'92t worry about it\
+	8: RT\
+	9: Points earned/keywords correct\
+	10: Total points so far\
+	11: Total points possible so far\
+	}

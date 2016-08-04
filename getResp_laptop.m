@@ -25,13 +25,13 @@ end
 beginTime = GetSecs;
 responded = 0;
 while ~responded
-    [keyIsDown,secs,keyCode] = KbCheck(5);
+    [keyIsDown,secs,keyCode] = KbCheck(6);
     lastKey = keyCode;
     while keyIsDown, 
-        [keyIsDown,secs,keyCode] = KbCheck(5); 
+        [keyIsDown,secs,keyCode] = KbCheck(6); 
     end
     while ~keyIsDown
-        [keyIsDown,secs,keyCode] = KbCheck(5);
+        [keyIsDown,secs,keyCode] = KbCheck(6);
         lastKey = keyCode;
     end
     key = KbName(lastKey);
@@ -50,7 +50,7 @@ while ~responded
         end
     end
 end
-[keyIsDown,secs,keyCode] = KbCheck(5);
+[keyIsDown,secs,keyCode] = KbCheck(6);
 while keyIsDown, 
-    [keyIsDown,secs,keyCode] = KbCheck(5); 
+    [keyIsDown,secs,keyCode] = KbCheck(6); 
 end
