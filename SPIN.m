@@ -38,7 +38,7 @@ while datainputflag ~= 1
 
 
 %         pinitT = str2double(pinitT);
-        if isnan(pinitT)
+        if ischar(pinitT)
             pinit = info{3};
             initCH = 1;
             initCHerr = '';
